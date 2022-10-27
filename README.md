@@ -1,9 +1,9 @@
 # В этом репо два парсера: xml -> json и json -> xml
-#main.go:  
-##Парсинг xml файла.  
+# main.go:  
+## Парсинг xml файла.  
 На вход принимает base64 - закодированный файл xml. Отдает строку с JSON.  
 
-###Ход установки на ВМ:  
+### Ход установки на ВМ:  
 
 Создаем директорию:  
 `mkdir $GOPATH/parsexml && cd parsexml`  
@@ -60,7 +60,7 @@ const res = await fetch(`http://${АДРЕС ВМ}:6060/parse-xml`, {
 const answer: any = await res.json()
 ```
 
-#jsontoxml
+# jsontoxml
 Обратная конвертация json -> xml  
 Сервис получает на вход строку с json.  
 Возвращает строку с xml.  
