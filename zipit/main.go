@@ -19,26 +19,6 @@ func check(e error) {
 }
 
 func main() {
-	// read zip
-	// r, err := zip.OpenReader("./test_zip.zip")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// defer r.Close()
-
-	// for _, f := range r.File {
-	// 	fmt.Printf("Contents of %s: \n", f.Name)
-	// 	rc, err := f.Open()
-	// 	if err != nil {
-	// 		log.Fatal(err)
-	// 	}
-	// 	_, err = io.CopyN(os.Stdout, rc, 68)
-	// 	if err != nil {
-	// 		log.Fatal(err)
-	// 	}
-	// 	rc.Close()
-	// }
-
 	// write zip
 	type Zipit struct {
 		Name, Body string
@@ -54,22 +34,22 @@ func main() {
 		var files []Zipit
 		json.Unmarshal([]byte(jsonstr), &files)
 
+		for i, bod := range files {
+			str := bod.Body
+			data, err := base64.StdEncoding.DecodeString(str)
+			if err != nil {
+				log.Fatal("error:", err)
+			}
+			files[i].Body = string(data)
+		}
+
 		archive, errArch := os.Create("archive.zip")
 		if errArch != nil {
 			panic(errArch)
 		}
 		defer archive.Close()
 
-		// buf := new(bytes.Buffer)
 		wArch := zip.NewWriter(archive)
-
-		// var files = []struct {
-		// 	Name, Body string
-		// }{
-		// 	{"readme.txt", "This archive contains some text files."},
-		// 	{"gopher.txt", "Gopher names:\nGeorge\nGeoffrey\nGonzo"},
-		// 	{"todo.txt", "Get animal handling licence.\nWrite more examples."},
-		// }
 
 		for _, file := range files {
 			f, err := wArch.Create(file.Name)
