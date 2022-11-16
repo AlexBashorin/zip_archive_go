@@ -73,5 +73,5 @@ func main() {
 		w.Header().Set("Content-Type", "text/xml")
 		w.Write(out)
 	})
-	log.Fatal(http.ListenAndServe(":6061", nil))
+	log.Fatal(http.ListenAndServe(":60", nil))
 }
